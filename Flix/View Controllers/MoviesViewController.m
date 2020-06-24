@@ -10,6 +10,7 @@
 #import "MovieCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "DetailsViewController.h"
+#import "MBProgressHUD.h"
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -27,10 +28,13 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
     [self fetchMovies];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
+    
     [self.tableView insertSubview:self.refreshControl atIndex:0];
 }
 
@@ -57,6 +61,7 @@
                      // TODO: Store the movies in a property to use elsewhere
                      // TODO: Reload your table view data
                  }
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [self.refreshControl endRefreshing];
              }];
           [task resume];

@@ -6,8 +6,8 @@ target 'Flix' do
   use_frameworks!
 
   # Pods for Flix
-  pod 'AFNetworking'	
-
+  pod 'AFNetworking'
+  pod 'MBProgressHUD', '~> 1.2.0'
 
   target 'FlixTests' do
     inherit! :search_paths
