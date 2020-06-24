@@ -44,7 +44,14 @@
           NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
           NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                  if (error != nil) {
-                     NSLog(@"%@", [error localizedDescription]);
+                     NSString *errorMessage = [error localizedDescription];
+                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot get Movies" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+                     UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                         [self fetchMovies];
+                     }];
+                     [alert addAction:tryAgainAction];
+                     [self presentViewController:alert animated:YES completion:^{}];
                  }
                  else {
                      NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -57,9 +64,6 @@
                      }
                      
                      [self.tableView reloadData];
-                     // TODO: Get the array of movies
-                     // TODO: Store the movies in a property to use elsewhere
-                     // TODO: Reload your table view data
                  }
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [self.refreshControl endRefreshing];
