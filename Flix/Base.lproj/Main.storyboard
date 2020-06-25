@@ -20,9 +20,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="TUe-kU-Mc8">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="158" id="yB8-Fr-a46" customClass="MovieCell">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="158"/>
+                                        <rect key="frame" x="0.0" y="72" width="414" height="158"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yB8-Fr-a46" id="G5t-Dq-FG2">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="158"/>
@@ -66,6 +71,7 @@
                         <barButtonItem key="backBarButtonItem" title="Movies" id="ZCL-eY-8wS"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="TUe-kU-Mc8" id="nKm-Uo-FJf"/>
                         <outlet property="tableView" destination="KGC-9x-q3M" id="flu-GL-aES"/>
                     </connections>
                 </viewController>
