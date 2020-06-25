@@ -102,7 +102,9 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = NO;
     self.searchBar.text = @"";
+    self.filteredData = self.movies;
     [self.searchBar resignFirstResponder];
+    [self.tableView reloadData];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
