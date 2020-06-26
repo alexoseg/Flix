@@ -97,6 +97,11 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+    [tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects: indexPath, nil] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 -(void)loadImageWithFade:(NSURL *)posterUrl fromCell:(MovieCell *)cell{
     NSURLRequest *request = [NSURLRequest requestWithURL:posterUrl];
 
