@@ -51,7 +51,7 @@
                      UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot get Movies" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
                      UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                          [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                         [self fetchMovies];
+                         [self fetchMovies]; //weak self to check
                      }];
                      [alert addAction:tryAgainAction];
                      [self presentViewController:alert animated:YES completion:^{}];

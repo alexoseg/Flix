@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F45CC7524A54B700000228D /* TrailerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F45CC7424A54B700000228D /* TrailerViewController.m */; };
+		0F45CC7824A551B00000228D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F45CC7624A5519E0000228D /* WebKit.framework */; };
 		0FB8253924A3B6D500994FB1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8253824A3B6D500994FB1 /* AppDelegate.m */; };
 		0FB8253C24A3B6D500994FB1 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8253B24A3B6D500994FB1 /* SceneDelegate.m */; };
 		0FB8254224A3B6D500994FB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FB8254024A3B6D500994FB1 /* Main.storyboard */; };
@@ -43,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F45CC7324A54B700000228D /* TrailerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrailerViewController.h; sourceTree = "<group>"; };
+		0F45CC7424A54B700000228D /* TrailerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrailerViewController.m; sourceTree = "<group>"; };
+		0F45CC7624A5519E0000228D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		0FB8253424A3B6D500994FB1 /* Flix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FB8253724A3B6D500994FB1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0FB8253824A3B6D500994FB1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -85,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F45CC7824A551B00000228D /* WebKit.framework in Frameworks */,
 				84376CBF9D0F406EAD946662 /* Pods_Flix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,6 +181,8 @@
 				0FBD9AAB24A3F4810076BF58 /* DetailsViewController.m */,
 				0FBD9AAD24A41F3A0076BF58 /* MoviesGridViewController.h */,
 				0FBD9AAE24A41F3A0076BF58 /* MoviesGridViewController.m */,
+				0F45CC7324A54B700000228D /* TrailerViewController.h */,
+				0F45CC7424A54B700000228D /* TrailerViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -206,6 +214,7 @@
 		E17EB764B3BC80D317A02CA9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F45CC7624A5519E0000228D /* WebKit.framework */,
 				A43F920D52E385F4E9560DBF /* Pods_Flix.framework */,
 				C680AD5AC55D8043BA50F68E /* Pods_Flix_FlixUITests.framework */,
 				2F86A9BE2F8CF371D7263086 /* Pods_FlixTests.framework */,
@@ -458,6 +467,7 @@
 				0FBD9AB224A4238F0076BF58 /* MovieCollectionCell.m in Sources */,
 				0FB8254A24A3B6D700994FB1 /* main.m in Sources */,
 				0FB8253C24A3B6D500994FB1 /* SceneDelegate.m in Sources */,
+				0F45CC7524A54B700000228D /* TrailerViewController.m in Sources */,
 				0FBD9AAF24A41F3A0076BF58 /* MoviesGridViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
