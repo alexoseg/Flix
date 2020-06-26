@@ -55,7 +55,7 @@
         if (imageResponse) {
             weakSelf.alpha = 0.0;
             weakSelf.image = image;
-            [UIView animateWithDuration:3.0 animations:^{
+            [UIView animateWithDuration:0.4 animations:^{
                 weakSelf.alpha = 1.0;
             }];
        }
