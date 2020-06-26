@@ -101,7 +101,7 @@
         <scene sceneID="9MF-7A-1xY">
             <objects>
                 <navigationController id="KbE-A4-UWz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="0aR-aB-PP5"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="projector_tabbar_item" id="0aR-aB-PP5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Q1g-8L-90U">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -241,7 +241,7 @@
         <scene sceneID="qLB-Y7-J7C">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aKj-YG-B7O" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now Playing" id="qju-wQ-lZc"/>
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="now_playing_tabbar_item" id="qju-wQ-lZc"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZYf-Sr-INy">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -340,4 +340,8 @@
             <point key="canvasLocation" x="-1207.2463768115942" y="2273.4375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="now_playing_tabbar_item" width="21" height="21"/>
+        <image name="projector_tabbar_item" width="21" height="25"/>
+    </resources>
 </document>
