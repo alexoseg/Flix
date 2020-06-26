@@ -92,10 +92,32 @@
     
     NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
     cell.posterView.image = nil;
-    [cell.posterView setImageWithURL:posterURL];
-    
+    [self loadImageWithFade:posterURL fromCell:cell];
     
     return cell;
+}
+
+-(void)loadImageWithFade:(NSURL *)posterUrl fromCell:(MovieCell *)cell{
+    NSURLRequest *request = [NSURLRequest requestWithURL:posterUrl];
+
+    __weak MovieCell *weakSelf = cell;
+    [cell.posterView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
+                                        
+        if (imageResponse) {
+            weakSelf.posterView.alpha = 0.0;
+            weakSelf.posterView.image = image;
+            [UIView animateWithDuration:0.4 animations:^{
+                weakSelf.posterView.alpha = 1.0;
+            }];
+       }
+       else {
+            weakSelf.posterView.image = image;
+       }
+    }
+    failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+        NSString *errorMessage = [error localizedDescription];
+        NSLog(@"%@", errorMessage);
+    }];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
