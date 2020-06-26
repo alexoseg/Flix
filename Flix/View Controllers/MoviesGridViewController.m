@@ -118,20 +118,28 @@
     detailsViewController.movie = movie;
 }
 
--(void)loadImageWithFade:(NSURL *)posterUrl fromCell:(MovieCollectionCell *)cell{
-    NSURLRequest *request = [NSURLRequest requestWithURL:posterUrl];
+-(void)loadImageWithFade:(NSURL *)posterURLLowQuality withHighQuality:(NSURL *)posterURLHighQuality fromCell:(MovieCollectionCell *)cell{
+    NSURLRequest *requestLowQuality = [NSURLRequest requestWithURL:posterURLLowQuality];
+    NSURLRequest *requestHighQuality = [NSURLRequest requestWithURL:posterURLHighQuality];
 
     __weak MovieCollectionCell *weakSelf = cell;
-    [cell.posterView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
+    
+    [cell.posterView setImageWithURLRequest:requestLowQuality placeholderImage:nil success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *lowImage) {
         if (imageResponse) {
             weakSelf.posterView.alpha = 0.0;
-            weakSelf.posterView.image = image;
-            [UIView animateWithDuration:0.4 animations:^{
+            weakSelf.posterView.image = lowImage;
+            [UIView animateWithDuration:0.2 animations:^{
                 weakSelf.posterView.alpha = 1.0;
+            } completion:^(BOOL finished) {
+                [weakSelf.posterView setImageWithURLRequest:requestHighQuality placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull highImage) {
+                    weakSelf.posterView.image = highImage;
+                } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+                    weakSelf.posterView.image = lowImage;
+                }];
             }];
        }
        else {
-            weakSelf.posterView.image = image;
+            weakSelf.posterView.image = lowImage;
        }
     }
     failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
@@ -146,15 +154,19 @@
     
     NSDictionary *movie = self.filteredData[indexPath.item];
     
-    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+    NSString *baseURLStringHighQuality = @"https://image.tmdb.org/t/p/original";
+    NSString *baseURLStringLowQuality = @"https://image.tmdb.org/t/p/w45";
+    
     NSString *posterURLString = movie[@"poster_path"];
-    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+    
+    NSString *fullPosterURLStringHighQuality = [baseURLStringHighQuality stringByAppendingString:posterURLString];
+    NSString *fullPosterURLStringLowQuality = [baseURLStringLowQuality stringByAppendingString:posterURLString];
        
-    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+    NSURL *posterURLHighQuality = [NSURL URLWithString:fullPosterURLStringHighQuality];
+    NSURL *posterURLLowQuality = [NSURL URLWithString:fullPosterURLStringLowQuality];
     
     cell.posterView.image = nil;
-//    [cell.posterView setImageWithURL:posterURL];
-    [self loadImageWithFade:posterURL fromCell:cell];
+    [self loadImageWithFade:posterURLLowQuality withHighQuality:posterURLHighQuality fromCell:cell];
     
     return cell;
 }
