@@ -29,6 +29,9 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    typeof(self) __weak weakSelf = self;
+    
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            if (error != nil) {
                NSLog(@"Error");
@@ -43,7 +46,7 @@
                NSURLRequest *request = [NSURLRequest requestWithURL:videoUrl
                    cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                timeoutInterval:10.0];
-               [self.trailerWebView loadRequest:request];
+               [weakSelf.trailerWebView loadRequest:request];
            }
        }];
     [task resume];

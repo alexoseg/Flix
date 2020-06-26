@@ -49,29 +49,26 @@
           typeof(self) __weak weakSelf = self;
     
           NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                
-                __typeof__(self) strongSelf = weakSelf;
-              
                  if (error != nil) {
                      NSString *errorMessage = [error localizedDescription];
                      UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot get Movies" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
                      UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                         [MBProgressHUD showHUDAddedTo:strongSelf.view animated:YES];
-                         [strongSelf fetchMovies];
+                         [MBProgressHUD showHUDAddedTo:weakSelf.view animated:YES];
+                         [weakSelf fetchMovies];
                      }];
                      [alert addAction:tryAgainAction];
-                     [strongSelf presentViewController:alert animated:YES completion:^{}];
+                     [weakSelf presentViewController:alert animated:YES completion:^{}];
                  }
                  else {
                      NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                      
-                     self.movies = dataDictionary[@"results"];
-                     self.filteredData = self.movies;
+                     weakSelf.movies = dataDictionary[@"results"];
+                     weakSelf.filteredData = weakSelf.movies;
                      
-                     [self.tableView reloadData];
+                     [weakSelf.tableView reloadData];
                  }
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-                [self.refreshControl endRefreshing];
+                [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+                [weakSelf.refreshControl endRefreshing];
              }];
           [task resume];
 }

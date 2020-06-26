@@ -48,25 +48,28 @@
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=8ec68e637b241eb6bc5b97abcd358733"];
           NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
           NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+          
+          typeof(self) __weak weakSelf = self;
+    
           NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                  if (error != nil) {
                      NSString *errorMessage = [error localizedDescription];
                      UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot get Movies" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
                      UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                         [self fetchMovies];
+                         [MBProgressHUD showHUDAddedTo:weakSelf.view animated:YES];
+                         [weakSelf fetchMovies];
                      }];
                      [alert addAction:tryAgainAction];
-                     [self presentViewController:alert animated:YES completion:^{}];
+                     [weakSelf presentViewController:alert animated:YES completion:^{}];
                  }
                  else {
                      NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                      
-                     self.movies = dataDictionary[@"results"];
-                     self.filteredData = self.movies;
-                     [self.collectionView reloadData]; 
+                     weakSelf.movies = dataDictionary[@"results"];
+                     weakSelf.filteredData = weakSelf.movies;
+                     [weakSelf.collectionView reloadData]; 
                  }
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
              }];
           [task resume];
 }
