@@ -45,16 +45,22 @@
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=8ec68e637b241eb6bc5b97abcd358733"];
           NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
           NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+          typeof(self) __weak weakSelf = self;
+    
           NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                
+                __typeof__(self) strongSelf = weakSelf;
+              
                  if (error != nil) {
                      NSString *errorMessage = [error localizedDescription];
                      UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot get Movies" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
                      UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                         [self fetchMovies]; //weak self to check
+                         [MBProgressHUD showHUDAddedTo:strongSelf.view animated:YES];
+                         [strongSelf fetchMovies];
                      }];
                      [alert addAction:tryAgainAction];
-                     [self presentViewController:alert animated:YES completion:^{}];
+                     [strongSelf presentViewController:alert animated:YES completion:^{}];
                  }
                  else {
                      NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
