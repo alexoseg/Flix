@@ -2,7 +2,7 @@
 
 **Flix** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **8** hours spent in total
+Time spent: **17** hours spent in total
 
 ## User Stories
 
@@ -27,10 +27,6 @@ The following **optional** features are implemented:
 - [x] Customize the navigation bar.
 - [x] Customize the UI.
 
-The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
-
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
 1. What are the performance tradeoffs between a CollectionView and TableView?
@@ -40,9 +36,19 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+### Main Functionality
+<img src='http://g.recordit.co/RIHC1Uphuk.gif' title='Video Walkthrough' width=250 alt='Video Walkthrough' />
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+### Error Handling
+<img src='http://g.recordit.co/HzpQMbJzUV.gif' title='Video Walkthrough' width=250 alt='Video Walkthrough' />
+
+### Search Feature
+<img src='http://g.recordit.co/oSp0nPT8Pk.gif' title='Search Feature' width=250 alt='Search Feature' />
+
+### Trailer Feature
+<img src='http://g.recordit.co/7nBg9dXLES.gif' title='Trailer Feature' width=250 alt='Trailer Feature' />
+
+GIF created with [Recordit](https://recordit.co/).
 
 ## Notes
 
@@ -57,7 +63,7 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2020] [Alex Oseguera]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
