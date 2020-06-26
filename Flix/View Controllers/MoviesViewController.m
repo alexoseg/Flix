@@ -30,9 +30,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.searchBar.delegate = self;
-        
-//    self.searchBar.searchTextField.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
-    
+            
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
     [self fetchMovies];

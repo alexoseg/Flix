@@ -21,13 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *baseUrlString = @"https://api.themoviedb.org/3/movie/";
-    NSString *movieId = self.movie[@"id"];
-    NSString *endingString = @"/videos?api_key=8ec68e637b241eb6bc5b97abcd358733&language=en-US";
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@%@", baseUrlString, movieId, endingString];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.apiURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     
     typeof(self) __weak weakSelf = self;
@@ -38,10 +32,11 @@
            }
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-               NSArray *results = dataDictionary[@"results"];
-               NSDictionary *videoDictionary = results[0];
+               
                NSString *baseYouTubeUrl = @"https://www.youtube.com/watch?v=";
-               NSString *videoUrlString = [NSString stringWithFormat:@"%@%@", baseYouTubeUrl, videoDictionary[@"key"]];
+               NSString *youtubeKey = dataDictionary[@"results"][0][@"key"];
+               
+               NSString *videoUrlString = [NSString stringWithFormat:@"%@%@", baseYouTubeUrl, youtubeKey];
                NSURL *videoUrl = [NSURL URLWithString:videoUrlString];
                NSURLRequest *request = [NSURLRequest requestWithURL:videoUrl
                    cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -51,15 +46,5 @@
        }];
     [task resume];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

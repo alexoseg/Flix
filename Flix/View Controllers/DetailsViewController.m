@@ -73,8 +73,15 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *baseUrlString = @"https://api.themoviedb.org/3/movie/";
+    NSString *movieId = self.movie[@"id"];
+    NSString *endingString = @"/videos?api_key=8ec68e637b241eb6bc5b97abcd358733&language=en-US";
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@", baseUrlString, movieId, endingString];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
     TrailerViewController *trailerView = [segue destinationViewController];
-    trailerView.movie = self.movie;
+    trailerView.apiURL = url;
 }
 
 

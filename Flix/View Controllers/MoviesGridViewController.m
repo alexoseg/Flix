@@ -102,22 +102,6 @@
     [self.collectionView reloadData];
 }
 
-
-
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    UICollectionViewCell *tappedCell = sender;
-    NSIndexPath *indexPath = [self.collectionView indexPathForCell:tappedCell];
-    NSDictionary *movie = self.filteredData[indexPath.item];
-    
-    DetailsViewController *detailsViewController = [segue destinationViewController];
-    detailsViewController.movie = movie;
-}
-
 -(void)loadImageWithFade:(NSURL *)posterURLLowQuality withHighQuality:(NSURL *)posterURLHighQuality fromCell:(MovieCollectionCell *)cell{
     NSURLRequest *requestLowQuality = [NSURLRequest requestWithURL:posterURLLowQuality];
     NSURLRequest *requestHighQuality = [NSURLRequest requestWithURL:posterURLHighQuality];
@@ -173,6 +157,19 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.filteredData.count;
+}
+
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    UICollectionViewCell *tappedCell = sender;
+    NSIndexPath *indexPath = [self.collectionView indexPathForCell:tappedCell];
+    NSDictionary *movie = self.filteredData[indexPath.item];
+    
+    DetailsViewController *detailsViewController = [segue destinationViewController];
+    detailsViewController.movie = movie;
 }
 
 @end
