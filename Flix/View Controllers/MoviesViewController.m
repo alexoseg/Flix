@@ -160,6 +160,8 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
     NSDictionary *movie = self.filteredData[indexPath.row];
     
+    NSLog(@"%@", movie[@"backdrop_path"]);
+    
     DetailsViewController *detailsViewController =  [segue destinationViewController];
     detailsViewController.movie = movie;
 }

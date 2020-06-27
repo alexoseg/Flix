@@ -30,10 +30,13 @@
     [self loadImageWithFade:posterURL fromImageView:self.posterView];
     
     NSString *backdropURLString = self.movie[@"backdrop_path"];
-    NSString *fullBackdropURLString = [baseURLString stringByAppendingString:backdropURLString];
+    if(![backdropURLString isKindOfClass:[NSNull class]]){
+        NSString *fullBackdropURLString = [baseURLString stringByAppendingString:backdropURLString];
+        
+        NSURL *backdropURL = [NSURL URLWithString:fullBackdropURLString];
+        [self loadImageWithFade:backdropURL fromImageView:self.backdropView];
+    }
     
-    NSURL *backdropURL = [NSURL URLWithString:fullBackdropURLString];
-    [self loadImageWithFade:backdropURL fromImageView:self.backdropView];
     
     self.titleLabel.text = self.movie[@"title"];
     self.synopsisLabel.text = self.movie[@"overview"];
