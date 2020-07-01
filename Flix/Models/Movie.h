@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSURL *posterURL;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
++ (NSArray *)moviesWithDictionaries:(NSArray *)dictionaries;
 
 @end
 

@@ -30,4 +30,14 @@
     return self; 
 }
 
++ (NSArray *)moviesWithDictionaries:(NSArray *)dictionaries {
+    NSMutableArray *movies = [[NSMutableArray alloc] init];
+    for(NSDictionary *movieDictionary in dictionaries){
+        Movie *movie = [[Movie alloc] initWithDictionary:movieDictionary];
+        [movies addObject:movie];
+    }
+    
+    return movies;
+}
+
 @end

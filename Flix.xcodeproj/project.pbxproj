@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F29636524ACE9CF004F2648 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F29636424ACE9CF004F2648 /* Movie.m */; };
+		0F29636B24ACFFA7004F2648 /* MovieAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F29636A24ACFFA7004F2648 /* MovieAPIManager.m */; };
 		0F45CC7524A54B700000228D /* TrailerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F45CC7424A54B700000228D /* TrailerViewController.m */; };
 		0F45CC7824A551B00000228D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F45CC7624A5519E0000228D /* WebKit.framework */; };
 		0FB8253924A3B6D500994FB1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8253824A3B6D500994FB1 /* AppDelegate.m */; };
@@ -48,6 +49,8 @@
 /* Begin PBXFileReference section */
 		0F29636324ACE9CF004F2648 /* Movie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
 		0F29636424ACE9CF004F2648 /* Movie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Movie.m; sourceTree = "<group>"; };
+		0F29636924ACFF43004F2648 /* MovieAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieAPIManager.h; sourceTree = "<group>"; };
+		0F29636A24ACFFA7004F2648 /* MovieAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieAPIManager.m; sourceTree = "<group>"; };
 		0F45CC7324A54B700000228D /* TrailerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrailerViewController.h; sourceTree = "<group>"; };
 		0F45CC7424A54B700000228D /* TrailerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrailerViewController.m; sourceTree = "<group>"; };
 		0F45CC7624A5519E0000228D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -126,6 +129,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		0F29636624ACFE3E004F2648 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				0F29636924ACFF43004F2648 /* MovieAPIManager.h */,
+				0F29636A24ACFFA7004F2648 /* MovieAPIManager.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		0FB8252B24A3B6D500994FB1 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +163,7 @@
 		0FB8253624A3B6D500994FB1 /* Flix */ = {
 			isa = PBXGroup;
 			children = (
+				0F29636624ACFE3E004F2648 /* API */,
 				0F29636224ACE996004F2648 /* Models */,
 				0FBBC47524A3E67100C5EACE /* VIews */,
 				0FB8256F24A3C00B00994FB1 /* View Controllers */,
@@ -478,6 +491,7 @@
 				0F29636524ACE9CF004F2648 /* Movie.m in Sources */,
 				0FB8256E24A3BF8700994FB1 /* MoviesViewController.m in Sources */,
 				0FBD9AAC24A3F4810076BF58 /* DetailsViewController.m in Sources */,
+				0F29636B24ACFFA7004F2648 /* MovieAPIManager.m in Sources */,
 				0FBD9AB224A4238F0076BF58 /* MovieCollectionCell.m in Sources */,
 				0FB8254A24A3B6D700994FB1 /* main.m in Sources */,
 				0FB8253C24A3B6D500994FB1 /* SceneDelegate.m in Sources */,

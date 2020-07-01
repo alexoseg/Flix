@@ -12,13 +12,14 @@
 #import "DetailsViewController.h"
 #import "MBProgressHUD.h"
 #import "Movie.h"
+#import "MovieAPIManager.h"
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *movies;
+@property (nonatomic, strong) NSArray *movies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSMutableArray *filteredData;
+@property (nonatomic, strong) NSArray *filteredData;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
@@ -43,36 +44,27 @@
 }
 
 -(void)fetchMovies {
-    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=8ec68e637b241eb6bc5b97abcd358733"];
-          NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-          NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-          typeof(self) __weak weakSelf = self;
-    
-          NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                 if (error != nil) {
-                     NSString *errorMessage = [error localizedDescription];
-                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot get Movies" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-                     UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                         [MBProgressHUD showHUDAddedTo:weakSelf.view animated:YES];
-                         [weakSelf fetchMovies];
-                     }];
-                     [alert addAction:tryAgainAction];
-                     [weakSelf presentViewController:alert animated:YES completion:^{}];
-                 }
-                 else {
-                     NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                     for(NSDictionary *movieDictionary in dataDictionary[@"results"]){
-                         Movie *movie = [[Movie alloc] initWithDictionary:movieDictionary];
-                         [weakSelf.movies addObject:movie];
-                     }
-                     weakSelf.filteredData = weakSelf.movies;
-                     [weakSelf.tableView reloadData];
-                 }
-                [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
-                [weakSelf.refreshControl endRefreshing];
-             }];
-          [task resume];
+    MovieAPIManager *manager = [[MovieAPIManager alloc] init];
+    typeof(self) __weak weakSelf = self;
+    [manager fetchNowPlaying:^(NSArray *movies, NSError *error) {
+        if(error){
+            NSString *errorMessage = [error localizedDescription];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot get Movies" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [MBProgressHUD showHUDAddedTo:weakSelf.view animated:YES];
+                [weakSelf fetchMovies];
+            }];
+            [alert addAction:tryAgainAction];
+            [weakSelf presentViewController:alert animated:YES completion:^{}];
+        }
+        else {
+            weakSelf.movies = movies;
+            weakSelf.filteredData = weakSelf.movies;
+            [weakSelf.tableView reloadData];
+        }
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        [weakSelf.refreshControl endRefreshing];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -83,29 +75,8 @@
    
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
-    Movie *movie = self.filteredData[indexPath.row];
-    cell.titleLabel.text = movie.title;
-    cell.synopsisLabel.text = movie.overview;
-    cell.posterView.image = nil;
-    
-    [self loadImageWithFade:movie.posterURL fromCell:cell];
-    
-    
-    
-    
-//    NSDictionary *movie = self.filteredData[indexPath.row];
-//
-//    cell.titleLabel.text = movie[@"title"];
-//    cell.synopsisLabel.text = movie[@"overview"];
-//
-//    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-//    NSString *posterURLString = movie[@"poster_path"];
-//    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
-//
-//    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-//    cell.posterView.image = nil;
-//    [self loadImageWithFade:posterURL fromCell:cell];
-    
+    cell.movie = self.movies[indexPath.row];
+
     return cell;
 }
 
@@ -152,7 +123,6 @@
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     if(searchText.length != 0){
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-//            NSDictionary *movie = evaluatedObject;
             Movie *movie = evaluatedObject;
             NSString *movieTitle = movie.title;
             return [movieTitle containsString:searchText];

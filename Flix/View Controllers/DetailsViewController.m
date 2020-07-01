@@ -22,27 +22,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-//    NSString *posterURLString = self.movie[@"poster_path"];
-//    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
-//
-//    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+    
     [self loadImageWithFade:self.movie.posterURL fromImageView:self.posterView];
     
-//    NSString *backdropURLString = self.movie[@"backdrop_path"];
     if(![self.movie.backdropPathURL isKindOfClass:[NSNull class]]){
-//        NSString *fullBackdropURLString = [baseURLString stringByAppendingString:backdropURLString];
-        
-//        NSURL *backdropURL = [NSURL URLWithString:fullBackdropURLString];
         [self loadImageWithFade:self.movie.backdropPathURL fromImageView:self.backdropView];
     }
-    
-    
-//    self.titleLabel.text = self.movie[@"title"];
     self.titleLabel.text = self.movie.title;
-//    self.synopsisLabel.text = self.movie[@"overview"];
     self.synopsisLabel.text = self.movie.overview;
-    
     [self.titleLabel sizeToFit];
     [self.synopsisLabel sizeToFit];
 }
@@ -79,7 +66,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString *baseUrlString = @"https://api.themoviedb.org/3/movie/";
-//    NSString *movieId = self.movie[@"id"];
     NSString *movieId = self.movie.movieId;
     NSString *endingString = @"/videos?api_key=8ec68e637b241eb6bc5b97abcd358733&language=en-US";
     
