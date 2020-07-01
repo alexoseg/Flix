@@ -11,13 +11,14 @@
 #import "UIImageView+AFNetworking.h"
 #import "DetailsViewController.h"
 #import "MBProgressHUD.h"
+#import "Movie.h"
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *movies;
+@property (nonatomic, strong) NSMutableArray *movies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSArray *filteredData;
+@property (nonatomic, strong) NSMutableArray *filteredData;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
@@ -61,10 +62,11 @@
                  }
                  else {
                      NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                     
-                     weakSelf.movies = dataDictionary[@"results"];
+                     for(NSDictionary *movieDictionary in dataDictionary[@"results"]){
+                         Movie *movie = [[Movie alloc] initWithDictionary:movieDictionary];
+                         [weakSelf.movies addObject:movie];
+                     }
                      weakSelf.filteredData = weakSelf.movies;
-                     
                      [weakSelf.tableView reloadData];
                  }
                 [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
@@ -81,18 +83,28 @@
    
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
-    NSDictionary *movie = self.filteredData[indexPath.row];
- 
-    cell.titleLabel.text = movie[@"title"];
-    cell.synopsisLabel.text = movie[@"overview"];
-    
-    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-    NSString *posterURLString = movie[@"poster_path"];
-    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
-    
-    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+    Movie *movie = self.filteredData[indexPath.row];
+    cell.titleLabel.text = movie.title;
+    cell.synopsisLabel.text = movie.overview;
     cell.posterView.image = nil;
-    [self loadImageWithFade:posterURL fromCell:cell];
+    
+    [self loadImageWithFade:movie.posterURL fromCell:cell];
+    
+    
+    
+    
+//    NSDictionary *movie = self.filteredData[indexPath.row];
+//
+//    cell.titleLabel.text = movie[@"title"];
+//    cell.synopsisLabel.text = movie[@"overview"];
+//
+//    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+//    NSString *posterURLString = movie[@"poster_path"];
+//    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+//
+//    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+//    cell.posterView.image = nil;
+//    [self loadImageWithFade:posterURL fromCell:cell];
     
     return cell;
 }
@@ -140,8 +152,9 @@
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     if(searchText.length != 0){
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-            NSDictionary *movie = evaluatedObject;
-            NSString *movieTitle = movie[@"title"];
+//            NSDictionary *movie = evaluatedObject;
+            Movie *movie = evaluatedObject;
+            NSString *movieTitle = movie.title;
             return [movieTitle containsString:searchText];
         }];
         self.filteredData = [self.movies filteredArrayUsingPredicate:predicate];
@@ -158,7 +171,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-    NSDictionary *movie = self.filteredData[indexPath.row];
+    Movie *movie = self.filteredData[indexPath.row];
     DetailsViewController *detailsViewController =  [segue destinationViewController];
     detailsViewController.movie = movie;
 }
